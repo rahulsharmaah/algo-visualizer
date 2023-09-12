@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { XYPlot, VerticalBarSeries, XAxis, YAxis } from "react-vis";
 import {
   Container,
   Typography,
@@ -11,6 +10,7 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { XAxis, XYPlot, YAxis, VerticalBarSeries } from "react-vis";
 
 const ValuesContainer = styled("div")`
   display: flex;
