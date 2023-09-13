@@ -44,7 +44,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const BubbleSort = () => {
+const MergeSort = () => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -64,6 +64,7 @@ const BubbleSort = () => {
     const inputArray = event.target.value
       .split(",")
       .map((item) => parseInt(item.trim(), 10));
+
     setData(inputArray);
     setIterationCount(0);
     setSwapCount(0);
@@ -73,27 +74,62 @@ const BubbleSort = () => {
     setSpeed(newValue);
   };
 
-  const bubbleSort = async () => {
+  const mergeSort = async () => {
     setIsSorting(true);
     const arr = [...data];
     const sortingSteps = [];
 
-    let totalIterations = 0;
-    let totalSwaps = 0;
+    const merge = (arr, left, middle, right) => {
+      const n1 = middle - left + 1;
+      const n2 = right - middle;
 
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
-        sortingSteps.push([...arr]);
-        totalIterations++;
+      const leftArr = new Array(n1);
+      const rightArr = new Array(n2);
 
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-          totalSwaps++;
+      for (let i = 0; i < n1; i++) leftArr[i] = arr[left + i];
+      for (let i = 0; i < n2; i++) rightArr[i] = arr[middle + 1 + i];
+
+      let i = 0;
+      let j = 0;
+      let k = left;
+
+      while (i < n1 && j < n2) {
+        if (leftArr[i] <= rightArr[j]) {
+          arr[k] = leftArr[i];
+          i++;
+        } else {
+          arr[k] = rightArr[j];
+          j++;
         }
+        sortingSteps.push([...arr]);
+        k++;
       }
-    }
 
-    sortingSteps.push([...arr]);
+      while (i < n1) {
+        arr[k] = leftArr[i];
+        sortingSteps.push([...arr]);
+        i++;
+        k++;
+      }
+
+      while (j < n2) {
+        arr[k] = rightArr[j];
+        sortingSteps.push([...arr]);
+        j++;
+        k++;
+      }
+    };
+
+    const mergeSortHelper = (arr, left, right) => {
+      if (left < right) {
+        const middle = Math.floor((left + right) / 2);
+        mergeSortHelper(arr, left, middle);
+        mergeSortHelper(arr, middle + 1, right);
+        merge(arr, left, middle, right);
+      }
+    };
+
+    mergeSortHelper(arr, 0, arr.length - 1);
 
     for (let step = 0; step < sortingSteps.length; step++) {
       setData(sortingSteps[step]);
@@ -101,16 +137,30 @@ const BubbleSort = () => {
     }
 
     setIsSorting(false);
-    setIterationCount(totalIterations);
-    setSwapCount(totalSwaps);
   };
 
+  // Usage:
+  // Make sure to replace your bubbleSort function with mergeSort.
+
+  // const graphData = data;
+
+  // const graphAnimation = useSpring({
+  //   config: {
+  //     duration: speed,
+  //   },
+  //   opacity: 1,
+  // });
+
+  // useEffect(() => {
+  //   // Trigger animation when data changes
+  //   graphAnimation.start();
+  // }, [data, graphAnimation]);
   const graphData = data;
 
   return (
     <Container maxWidth="md">
       <Typography variant="h2" gutterBottom>
-        Bubble Sort Visualizer
+        Merge Sort{" "}
       </Typography>
       <TextField
         variant="outlined"
@@ -138,11 +188,11 @@ const BubbleSort = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={bubbleSort}
+        onClick={mergeSort}
         disabled={isSorting}
         style={{ marginTop: "20px" }}
       >
-        Sort using Bubble Sort
+        Sort using Merge Sort
       </Button>
       <StatsContainer>
         <div>
@@ -190,8 +240,9 @@ const BubbleSort = () => {
           ))}
         </svg>
       </GraphContainer>
+      );
     </Container>
   );
 };
 
-export default BubbleSort;
+export default MergeSort;

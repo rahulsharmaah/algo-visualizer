@@ -44,7 +44,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const BubbleSort = () => {
+const QuickSort = () => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -64,6 +64,7 @@ const BubbleSort = () => {
     const inputArray = event.target.value
       .split(",")
       .map((item) => parseInt(item.trim(), 10));
+
     setData(inputArray);
     setIterationCount(0);
     setSwapCount(0);
@@ -73,7 +74,7 @@ const BubbleSort = () => {
     setSpeed(newValue);
   };
 
-  const bubbleSort = async () => {
+  const quickSort = async () => {
     setIsSorting(true);
     const arr = [...data];
     const sortingSteps = [];
@@ -81,17 +82,37 @@ const BubbleSort = () => {
     let totalIterations = 0;
     let totalSwaps = 0;
 
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
+    async function partition(low, high) {
+      const pivot = arr[high];
+      let i = low - 1;
+
+      for (let j = low; j <= high - 1; j++) {
         sortingSteps.push([...arr]);
         totalIterations++;
 
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        if (arr[j] < pivot) {
+          i++;
+          [arr[i], arr[j]] = [arr[j], arr[i]];
           totalSwaps++;
         }
       }
+
+      [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+      totalSwaps++;
+
+      return i + 1;
     }
+
+    async function quickSortHelper(low, high) {
+      if (low < high) {
+        const partitionIndex = await partition(low, high);
+
+        await quickSortHelper(low, partitionIndex - 1);
+        await quickSortHelper(partitionIndex + 1, high);
+      }
+    }
+
+    await quickSortHelper(0, arr.length - 1);
 
     sortingSteps.push([...arr]);
 
@@ -105,12 +126,28 @@ const BubbleSort = () => {
     setSwapCount(totalSwaps);
   };
 
+  // Usage:
+  // Make sure to replace your bubbleSort function with mergeSort.
+
+  // const graphData = data;
+
+  // const graphAnimation = useSpring({
+  //   config: {
+  //     duration: speed,
+  //   },
+  //   opacity: 1,
+  // });
+
+  // useEffect(() => {
+  //   // Trigger animation when data changes
+  //   graphAnimation.start();
+  // }, [data, graphAnimation]);
   const graphData = data;
 
   return (
     <Container maxWidth="md">
       <Typography variant="h2" gutterBottom>
-        Bubble Sort Visualizer
+        Quick Sort Visualizer
       </Typography>
       <TextField
         variant="outlined"
@@ -138,11 +175,11 @@ const BubbleSort = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={bubbleSort}
+        onClick={quickSort}
         disabled={isSorting}
         style={{ marginTop: "20px" }}
       >
-        Sort using Bubble Sort
+        Sort using Quick Sort
       </Button>
       <StatsContainer>
         <div>
@@ -190,8 +227,9 @@ const BubbleSort = () => {
           ))}
         </svg>
       </GraphContainer>
+      );
     </Container>
   );
 };
 
-export default BubbleSort;
+export default QuickSort;

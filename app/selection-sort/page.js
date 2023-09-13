@@ -44,7 +44,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const BubbleSort = () => {
+const SelectionSort = () => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -73,7 +73,7 @@ const BubbleSort = () => {
     setSpeed(newValue);
   };
 
-  const bubbleSort = async () => {
+  const selectionSort = async () => {
     setIsSorting(true);
     const arr = [...data];
     const sortingSteps = [];
@@ -82,14 +82,21 @@ const BubbleSort = () => {
     let totalSwaps = 0;
 
     for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
+      let minIndex = i; // Assume the current element is the minimum
+
+      for (let j = i + 1; j < arr.length; j++) {
         sortingSteps.push([...arr]);
         totalIterations++;
 
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-          totalSwaps++;
+        if (arr[j] < arr[minIndex]) {
+          minIndex = j; // Update the index of the minimum element
         }
+      }
+
+      if (minIndex !== i) {
+        // Swap the minimum element with the current element
+        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+        totalSwaps++;
       }
     }
 
@@ -110,7 +117,7 @@ const BubbleSort = () => {
   return (
     <Container maxWidth="md">
       <Typography variant="h2" gutterBottom>
-        Bubble Sort Visualizer
+        Selection Sort Visualizer
       </Typography>
       <TextField
         variant="outlined"
@@ -138,11 +145,11 @@ const BubbleSort = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={bubbleSort}
+        onClick={selectionSort}
         disabled={isSorting}
         style={{ marginTop: "20px" }}
       >
-        Sort using Bubble Sort
+        Sort using Selection Sort
       </Button>
       <StatsContainer>
         <div>
@@ -194,4 +201,4 @@ const BubbleSort = () => {
   );
 };
 
-export default BubbleSort;
+export default SelectionSort;
