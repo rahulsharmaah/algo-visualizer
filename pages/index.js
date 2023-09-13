@@ -1,24 +1,34 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { Box } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import SortingTabs from "../components/SortingTabs";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Box md={12}>
-        <SortingTabs />
-      </Box>
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      <Container>
+        <Box mb={9}>
+          <Typography
+            variant="h2"
+            color="secondary"
+            textAlign="center"
+            style={{
+              textTransform: "capitalize",
+              color: "#00833E",
+              fontWeight: 600,
+            }}
+          >
+            {" "}
+            Algorithm Visualizer
+          </Typography>
+        </Box>
+      </Container>
+      <Grid md={6} lg={6} xl={6} margin={"10px 3rem"}>
+        {" "}
+        <Box>
+          <SortingTabs />
+        </Box>
+      </Grid>
     </main>
   );
 }

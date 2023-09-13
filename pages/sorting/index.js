@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -8,6 +8,7 @@ import {
   Slider,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import BubbleSortAlgorithm from "../../components/BubbleSortAlgorithm";
 
 const ValuesContainer = styled("div")`
   display: flex;
@@ -50,18 +51,26 @@ const BubbleSort = () => {
   const [iterationCount, setIterationCount] = useState(0);
   const [swapCount, setSwapCount] = useState(0);
   const [speed, setSpeed] = useState(1000);
+  const [inputValue, setInputValue] = useState("");
 
   const generateRandomData = () => {
     const randomData = Array.from({ length: 10 }, () =>
       Math.floor(Math.random() * 100)
     );
+    const randomDataString = randomData.join(", ");
     setData(randomData);
     setIterationCount(0);
     setSwapCount(0);
+    setInputValue(randomDataString); // Set the input field value
   };
 
+  useEffect(() => {
+    generateRandomData();
+  }, []);
   const handleInputChange = (event) => {
-    const inputArray = event.target.value
+    const value = event.target.value;
+    setInputValue(value);
+    const inputArray = value
       .split(",")
       .map((item) => parseInt(item.trim(), 10));
     setData(inputArray);
@@ -73,45 +82,15 @@ const BubbleSort = () => {
     setSpeed(newValue);
   };
 
-  const bubbleSort = async () => {
-    setIsSorting(true);
-    const arr = [...data];
-    const sortingSteps = [];
-
-    let totalIterations = 0;
-    let totalSwaps = 0;
-
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
-        sortingSteps.push([...arr]);
-        totalIterations++;
-
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-          totalSwaps++;
-        }
-      }
-    }
-
-    sortingSteps.push([...arr]);
-
-    for (let step = 0; step < sortingSteps.length; step++) {
-      setData(sortingSteps[step]);
-      await new Promise((resolve) => setTimeout(resolve, speed));
-    }
-
-    setIsSorting(false);
-    setIterationCount(totalIterations);
-    setSwapCount(totalSwaps);
-  };
-
   const graphData = data;
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h2" gutterBottom>
-        Bubble Sort Visualizer
+      <Typography variant="h3" gutterBottom textAlign={"center"}>
+        Bubble Sort
       </Typography>
+
+      {/* Input and generate random data button */}
       <TextField
         variant="outlined"
         label="Enter numbers (comma-separated)"
@@ -120,6 +99,7 @@ const BubbleSort = () => {
         placeholder="e.g., 5, 3, 8, 1, 9"
         disabled={isSorting}
         margin="normal"
+        value={inputValue}
       />
       <Button
         variant="contained"
@@ -128,22 +108,27 @@ const BubbleSort = () => {
       >
         Generate Random Data
       </Button>
+
+      {/* Display values */}
       <ValuesContainer>
         {data.map((item, index) => (
-          <ValueItem key={index} highlight={false} swapped={false}>
+          <ValueItem key={index} highlight={true} swapped={false}>
             {item}
           </ValueItem>
         ))}
       </ValuesContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={bubbleSort}
-        disabled={isSorting}
-        style={{ marginTop: "20px" }}
-      >
-        Sort using Bubble Sort
-      </Button>
+
+      {/* Sort button using the BubbleSortAlgorithm component */}
+      <BubbleSortAlgorithm
+        data={data}
+        speed={speed}
+        onDataChange={setData}
+        onIterationChange={setIterationCount}
+        onSwapChange={setSwapCount}
+        isSorting={isSorting}
+      />
+
+      {/* Statistics */}
       <StatsContainer>
         <div>
           <Typography variant="h5">Number of Iterations:</Typography>
@@ -154,6 +139,8 @@ const BubbleSort = () => {
           <Typography variant="body1">{swapCount}</Typography>
         </div>
       </StatsContainer>
+
+      {/* Speed Slider */}
       <div style={{ marginTop: "20px" }}>
         <Typography id="speed-slider" gutterBottom>
           Speed:
@@ -167,6 +154,8 @@ const BubbleSort = () => {
           aria-labelledby="speed-slider"
         />
       </div>
+
+      {/* Graph */}
       <GraphContainer>
         <Typography variant="h4">Graph</Typography>
         <svg
@@ -180,12 +169,11 @@ const BubbleSort = () => {
           {graphData.map((item, index) => (
             <rect
               key={index}
-              x={index * (400 / graphData.length)}
+              x={index * (400 / graphData.length) + 2} // Add spacing between bars (e.g., 2 units)
               y={200 - item * 2}
-              width={400 / graphData.length}
+              width={400 / graphData.length - 4} // Reduce bar width to add spacing
               height={item * 2}
-              fill="blue"
-              gradientTransform="red"
+              fill={index < iterationCount ? "green" : "blue"} // Change color for sorted bars
             />
           ))}
         </svg>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -50,18 +50,26 @@ const SelectionSort = () => {
   const [iterationCount, setIterationCount] = useState(0);
   const [swapCount, setSwapCount] = useState(0);
   const [speed, setSpeed] = useState(1000);
+  const [inputValue, setInputValue] = useState("");
 
   const generateRandomData = () => {
     const randomData = Array.from({ length: 10 }, () =>
       Math.floor(Math.random() * 100)
     );
+    const randomDataString = randomData.join(", ");
     setData(randomData);
     setIterationCount(0);
     setSwapCount(0);
+    setInputValue(randomDataString); // Set the input field value
   };
 
+  useEffect(() => {
+    generateRandomData();
+  }, []);
   const handleInputChange = (event) => {
-    const inputArray = event.target.value
+    const value = event.target.value;
+    setInputValue(value);
+    const inputArray = value
       .split(",")
       .map((item) => parseInt(item.trim(), 10));
     setData(inputArray);
@@ -116,8 +124,8 @@ const SelectionSort = () => {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h2" gutterBottom>
-        Selection Sort Visualizer
+      <Typography variant="h3" gutterBottom textAlign="center">
+        Selection Sort
       </Typography>
       <TextField
         variant="outlined"
@@ -127,6 +135,7 @@ const SelectionSort = () => {
         placeholder="e.g., 5, 3, 8, 1, 9"
         disabled={isSorting}
         margin="normal"
+        value={inputValue}
       />
       <Button
         variant="contained"
@@ -187,12 +196,11 @@ const SelectionSort = () => {
           {graphData.map((item, index) => (
             <rect
               key={index}
-              x={index * (400 / graphData.length)}
+              x={index * (400 / graphData.length) + 2} // Add spacing between bars (e.g., 2 units)
               y={200 - item * 2}
-              width={400 / graphData.length}
+              width={400 / graphData.length - 4} // Reduce bar width to add spacing
               height={item * 2}
-              fill="blue"
-              gradientTransform="red"
+              fill={index < iterationCount ? "green" : "blue"} // Change color for sorted bars
             />
           ))}
         </svg>
