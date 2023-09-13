@@ -1,12 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
+
 import BubbleSort from "../../pages/sorting";
 import SelectionSort from "../../pages/selection-sort";
 import HeapSort from "../../pages/heap-sort";
 import QuickSort from "../../pages/quick-sort";
+import { Box, Tab, Tabs } from "@mui/material";
 
 function SortingTabs() {
   const [currentTab, setCurrentTab] = useState(0);
