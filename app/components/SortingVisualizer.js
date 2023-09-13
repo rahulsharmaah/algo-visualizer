@@ -1,13 +1,7 @@
-"use client";
-import React, { useState } from "react";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Slider,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Container, Typography, TextField, Button, Slider } from "@mui/material";
 import { styled } from "@mui/system";
+import { useSpring, animated } from "react-spring";
 
 const ValuesContainer = styled("div")`
   display: flex;
@@ -23,8 +17,7 @@ const ValueItem = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) =>
-    props.highlight ? "red" : props.swapped ? "green" : "blue"};
+  background-color: ${(props) => props.highlight ? "red" : props.swapped ? "green" : "blue"};
   color: white;
   font-weight: bold;
   border-radius: 4px;
@@ -44,7 +37,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const BubbleSort = () => {
+const SortingVisualizer = () => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -52,18 +45,14 @@ const BubbleSort = () => {
   const [speed, setSpeed] = useState(1000);
 
   const generateRandomData = () => {
-    const randomData = Array.from({ length: 10 }, () =>
-      Math.floor(Math.random() * 100)
-    );
+    const randomData = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100));
     setData(randomData);
     setIterationCount(0);
     setSwapCount(0);
   };
 
   const handleInputChange = (event) => {
-    const inputArray = event.target.value
-      .split(",")
-      .map((item) => parseInt(item.trim(), 10));
+    const inputArray = event.target.value.split(",").map((item) => parseInt(item.trim(), 10));
     setData(inputArray);
     setIterationCount(0);
     setSwapCount(0);
@@ -107,10 +96,21 @@ const BubbleSort = () => {
 
   const graphData = data;
 
+  const graphAnimation = useSpring({
+    config: {
+      duration: speed,
+    },
+    opacity: 1,
+  });
+
+  useEffect(() => {
+    graphAnimation.start();
+  }, [data, graphAnimation]);
+
   return (
     <Container maxWidth="md">
       <Typography variant="h2" gutterBottom>
-        Bubble Sort Visualizer
+        Sorting Visualizer
       </Typography>
       <TextField
         variant="outlined"
@@ -169,29 +169,29 @@ const BubbleSort = () => {
       </div>
       <GraphContainer>
         <Typography variant="h4">Graph</Typography>
-        <svg
+        <animated.svg
           xmlns="http://www.w3.org/2000/svg"
           width="400"
           height="200"
           style={{
+            ...graphAnimation,
             overflow: "visible",
           }}
         >
           {graphData.map((item, index) => (
-            <rect
+            <animated.rect
               key={index}
               x={index * (400 / graphData.length)}
               y={200 - item * 2}
               width={400 / graphData.length}
               height={item * 2}
               fill="blue"
-              gradientTransform="red"
             />
           ))}
-        </svg>
+        </animated.svg>
       </GraphContainer>
     </Container>
   );
 };
 
-export default BubbleSort;
+export default SortingVisualizer;

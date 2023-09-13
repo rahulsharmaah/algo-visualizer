@@ -44,7 +44,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const BubbleSort = () => {
+const HeapSort = () => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -73,7 +73,7 @@ const BubbleSort = () => {
     setSpeed(newValue);
   };
 
-  const bubbleSort = async () => {
+  const heapSort = async () => {
     setIsSorting(true);
     const arr = [...data];
     const sortingSteps = [];
@@ -81,17 +81,55 @@ const BubbleSort = () => {
     let totalIterations = 0;
     let totalSwaps = 0;
 
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
+    async function heapify(arr, n, i) {
+      let largest = i;
+      const left = 2 * i + 1;
+      const right = 2 * i + 2;
+
+      if (left < n && arr[left] > arr[largest]) {
+        largest = left;
+      }
+
+      if (right < n && arr[right] > arr[largest]) {
+        largest = right;
+      }
+
+      if (largest !== i) {
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        totalSwaps++;
+
         sortingSteps.push([...arr]);
         totalIterations++;
 
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-          totalSwaps++;
-        }
+        await heapify(arr, n, largest);
       }
     }
+
+    async function buildHeap(arr) {
+      const n = arr.length;
+
+      for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        await heapify(arr, n, i);
+      }
+    }
+
+    async function heapSortHelper(arr) {
+      const n = arr.length;
+
+      await buildHeap(arr);
+
+      for (let i = n - 1; i > 0; i--) {
+        [arr[0], arr[i]] = [arr[i], arr[0]];
+        totalSwaps++;
+
+        sortingSteps.push([...arr]);
+        totalIterations++;
+
+        await heapify(arr, i, 0);
+      }
+    }
+
+    await heapSortHelper(arr);
 
     sortingSteps.push([...arr]);
 
@@ -110,7 +148,7 @@ const BubbleSort = () => {
   return (
     <Container maxWidth="md">
       <Typography variant="h2" gutterBottom>
-        Bubble Sort Visualizer
+        Heap Sort Visualizer
       </Typography>
       <TextField
         variant="outlined"
@@ -138,11 +176,11 @@ const BubbleSort = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={bubbleSort}
+        onClick={heapSort}
         disabled={isSorting}
         style={{ marginTop: "20px" }}
       >
-        Sort using Bubble Sort
+        Sort using Heap Sort
       </Button>
       <StatsContainer>
         <div>
@@ -194,4 +232,4 @@ const BubbleSort = () => {
   );
 };
 
-export default BubbleSort;
+export default HeapSort;
