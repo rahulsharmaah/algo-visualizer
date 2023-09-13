@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-import BubbleSort from "@/app/sorting/page";
-import SelectionSort from "@/app/selection-sort/page";
-import HeapSort from "@/app/heap-sort/page";
-import QuickSort from "@/app/quick-sort/page";
-
+import BubbleSort from "../../pages/sorting";
+import SelectionSort from "../../pages/selection-sort";
+import HeapSort from "../../pages/heap-sort";
+import QuickSort from "../../pages/quick-sort";
 
 function SortingTabs() {
   const [currentTab, setCurrentTab] = useState(0);
