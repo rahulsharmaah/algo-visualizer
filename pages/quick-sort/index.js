@@ -6,8 +6,11 @@ import {
   TextField,
   Button,
   Slider,
+  Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import QuickSortExplanation from "../../components/QuickSortAlgorithm/AlgorithmInfo";
+import QuickSortComplexity from "../../components/QuickSortAlgorithm/Complexity";
 
 const ValuesContainer = styled("div")`
   display: flex;
@@ -44,7 +47,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const QuickSort = () => {
+const QuickSort = ({ showDetails }) => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -239,6 +242,16 @@ const QuickSort = () => {
         </svg>
       </GraphContainer>
       );
+      {showDetails ? (
+        <Grid container mt={2} mb={3}>
+          <Grid item md={12} lg={12}>
+            <QuickSortExplanation />
+          </Grid>
+          <Grid item md={12} lg={12} xs={10}>
+            <QuickSortComplexity />
+          </Grid>
+        </Grid>
+      ) : null}
     </Container>
   );
 };

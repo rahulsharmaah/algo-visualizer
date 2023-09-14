@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
+  Grid,
   TextField,
   Button,
   Slider,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import HeapSortExplanation from "../../components/HeapSortAlgorithm/AlgorithmInfo";
+import HeapSortComplexity from "@../../components/HeapSortAlgorithm/ComplexityInfo";
 
 const ValuesContainer = styled("div")`
   display: flex;
@@ -44,7 +47,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const HeapSort = () => {
+const HeapSort = ({ showDetails }) => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -237,6 +240,16 @@ const HeapSort = () => {
           ))}
         </svg>
       </GraphContainer>
+      {showDetails ? (
+        <Grid container mt={2} mb={3}>
+          <Grid item md={12} lg={12}>
+            <HeapSortExplanation />
+          </Grid>
+          <Grid item md={12} lg={12} xs={10}>
+            <HeapSortComplexity />
+          </Grid>
+        </Grid>
+      ) : null}
     </Container>
   );
 };

@@ -50,27 +50,27 @@ function SortingTabs() {
         {currentTab === 0 && (
           <SortingContainer>
             <SortingAlgorithm>
-              <BubbleSort />
+              <BubbleSort showDetails={false} />
             </SortingAlgorithm>
             <SortingAlgorithm>
-              <MergeSort  showDetails={false}/>
+              <MergeSort showDetails={false} />
             </SortingAlgorithm>
             <SortingAlgorithm>
-              <SelectionSort />
+              <SelectionSort showDetails={false} />
             </SortingAlgorithm>
             <SortingAlgorithm>
-              <HeapSort />
+              <HeapSort showDetails={false} />
             </SortingAlgorithm>
             <SortingAlgorithm>
-              <QuickSort />
+              <QuickSort showDetails={false} />
             </SortingAlgorithm>
           </SortingContainer>
         )}
-        {currentTab === 1 && <BubbleSort />}
+        {currentTab === 1 && <BubbleSort showDetails={true} />}
         {currentTab === 2 && <MergeSort showDetails={true} />}
-        {currentTab === 3 && <SelectionSort />}
-        {currentTab === 4 && <HeapSort />}
-        {currentTab === 5 && <QuickSort />}
+        {currentTab === 3 && <SelectionSort showDetails={true} />}
+        {currentTab === 4 && <HeapSort showDetails={true} />}
+        {currentTab === 5 && <QuickSort showDetails={true} />}
       </Box>
     </div>
   );

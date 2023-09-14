@@ -6,8 +6,11 @@ import {
   TextField,
   Button,
   Slider,
+  Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import SelectionSortExplanation from "../../components/SelectionSortAlgorithm/AlgorithmInfo";
+import SelectionSortComplexity from "../../components/SelectionSortAlgorithm/Complexity";
 
 const ValuesContainer = styled("div")`
   display: flex;
@@ -44,7 +47,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const SelectionSort = () => {
+const SelectionSort = ({ showDetails }) => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -146,7 +149,7 @@ const SelectionSort = () => {
       </Button>
       <ValuesContainer>
         {data.map((item, index) => (
-          <ValueItem key={index} highlight={false} swapped={false}>
+          <ValueItem key={index} highlight={true} swapped={false}>
             {item}
           </ValueItem>
         ))}
@@ -205,6 +208,16 @@ const SelectionSort = () => {
           ))}
         </svg>
       </GraphContainer>
+      {showDetails ? (
+        <Grid container mt={2} mb={3}>
+          <Grid item md={12} lg={12}>
+            <SelectionSortExplanation />
+          </Grid>
+          <Grid item md={12} lg={12} xs={10}>
+            <SelectionSortComplexity />
+          </Grid>
+        </Grid>
+      ) : null}
     </Container>
   );
 };

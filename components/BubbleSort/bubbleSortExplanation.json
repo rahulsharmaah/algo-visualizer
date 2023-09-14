@@ -1,0 +1,17 @@
+{
+  "title": "Bubble Sort",
+  "steps": [
+    "Comparison: Bubble Sort compares adjacent elements in the array and swaps them if they are in the wrong order.",
+    "Iteration: The algorithm repeats the comparison and swapping process for each pair of adjacent elements in the array, starting from the beginning.",
+    "Passes: Each pass of the algorithm moves the largest unsorted element to its correct position at the end of the array.",
+    "Repeat: Steps 1 to 3 are repeated until no more swaps are needed, indicating that the array is sorted."
+  ],
+  "example": {
+    "input": [38, 27, 43, 3, 9, 82, 10],
+    "output": [3, 9, 10, 27, 38, 43, 82]
+  },
+  "complexity": {
+    "time": "O(n^2)",
+    "space": "O(1)"
+  }
+}

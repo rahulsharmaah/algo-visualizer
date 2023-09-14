@@ -1,0 +1,16 @@
+{
+  "title": "Selection Sort",
+  "steps": [
+    "Step 1: Find the minimum element in the unsorted part of the array.",
+    "Step 2: Swap it with the first element of the unsorted part.",
+    "Step 3: Repeat the above steps for the remaining unsorted part."
+  ],
+  "example": {
+    "input": [38, 27, 43, 3, 9, 82, 10],
+    "output": [3, 9, 10, 27, 38, 43, 82]
+  },
+  "complexity": {
+    "time": "O(n^2)",
+    "space": "O(1)"
+  }
+}

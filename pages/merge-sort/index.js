@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import MergeSortExplanation from "../../components/MergeSortAlgorithm";
+import MergeSortExplanation from "../../components/MergeSortAlgorithm/AlgorithmInfo";
 import ComplexityInfo from "../../components/MergeSortAlgorithm/Complexity";
 import Gutter from "../../components/Gutter";
 
@@ -238,12 +238,11 @@ const MergeSort = ({ showDetails }) => {
                 ))}
               </svg>
             </GraphContainer>
-            );
           </Container>
         </Grid>
       </Grid>
       {showDetails ? (
-        <Grid container>
+        <Grid container mt={2} mb={3}>
           <Grid item md={12} lg={12}>
             <MergeSortExplanation />
           </Grid>
@@ -252,7 +251,7 @@ const MergeSort = ({ showDetails }) => {
           </Grid>
         </Grid>
       ) : (
-        "null"
+        null
       )}
     </>
   );
