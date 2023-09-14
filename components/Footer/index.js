@@ -1,35 +1,34 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Container, Typography, Link } from "@mui/material";
 
 const StyledFooter = styled.footer`
-  background-color: #333;
-  color: #fff;
   text-align: center;
   padding: 10px;
 `;
 
+const heartbeat = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+`;
+
 const HeartIcon = styled.span`
   vertical-align: middle;
-  animation: heartbeat 1.5s infinite;
-
-  @keyframes heartbeat {
-    0% {
-      transform: scale(1);
-    }
-    25% {
-      transform: scale(1.1);
-    }
-    50% {
-      transform: scale(1);
-    }
-    75% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+  animation: ${heartbeat} 1.5s infinite;
+  display: inline-block;
 `;
 
 const Footer = () => {

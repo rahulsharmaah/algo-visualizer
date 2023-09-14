@@ -1,0 +1,17 @@
+{
+  "title": "Quick Sort",
+ " steps": [
+    "Select a pivot element from the array. The choice of the pivot can affect the algorithm's efficiency.",
+    "Partition the array into two sub-arrays: elements less than the pivot and elements greater than the pivot.",
+    "Recursively apply Quick Sort to both sub-arrays.",
+    "Combine the sorted sub-arrays and the pivot to get the final sorted array."
+  ],
+  "example": {
+   " input": [38, 27, 43, 3, 9, 82, 10],
+   " output": [3, 9, 10, 27, 38, 43, 82]
+  },
+ " complexity": {
+   " time": "O(n log n) average, O(n^2) worst",
+    "space": "O(log n)"
+  }
+}

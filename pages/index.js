@@ -7,7 +7,7 @@ import Gutter from "../components/Gutter";
 
 export default function Home() {
   return (
-    <Gutter>
+    <Gutter xs={12} lg={12}>
       <main className={styles.main}>
         <Container>
           <Box mb={9}>

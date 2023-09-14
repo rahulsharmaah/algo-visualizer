@@ -66,7 +66,7 @@ const MergeSortCode = () => {
           <li key={index}>{step}</li>
         ))}
       </ul>
-      <Typography variant="h4" textAlign={"center"}>
+      <Typography variant="h5" textAlign={"center"} mt={3} mb={5}>
         Merge Sort Code
       </Typography>
       <CodeContainer>

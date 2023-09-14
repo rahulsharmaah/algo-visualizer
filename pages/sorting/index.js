@@ -6,9 +6,12 @@ import {
   TextField,
   Button,
   Slider,
+  Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import BubbleSortAlgorithm from "../../components/BubbleSortAlgorithm";
+import BubbleSortExplanation from "../../components/BubbleSort/AlgorithmInfo";
+import ComplexityInfo from "../../components/BubbleSort/Complexity";
 
 const ValuesContainer = styled("div")`
   display: flex;
@@ -45,7 +48,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const BubbleSort = () => {
+const BubbleSort = ({showDetails}) => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -178,6 +181,18 @@ const BubbleSort = () => {
           ))}
         </svg>
       </GraphContainer>
+      {showDetails ? (
+        <Grid container mt={2} mb={3}>
+          <Grid item md={12} lg={12}>
+            <BubbleSortExplanation />
+          </Grid>
+          <Grid item md={12} lg={12} xs={10}>
+            <ComplexityInfo />
+          </Grid>
+        </Grid>
+      ) : (
+        null
+      )}
     </Container>
   );
 };

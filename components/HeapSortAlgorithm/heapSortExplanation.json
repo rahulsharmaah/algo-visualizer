@@ -1,0 +1,17 @@
+{
+  "title": "Heap Sort",
+  "steps": [
+    "Step 1: Build a max-heap from the input array (heapify), where the largest element is at the root.",
+    "Step 2: Swap the root element (largest) with the last element of the heap and reduce the heap size.",
+    "Step 3: Heapify the root element to maintain the max-heap.",
+    "Step 4: Repeat steps 2 and 3 until the entire array is sorted."
+  ],
+  "example": {
+    "input": [38, 27, 43, 3, 9, 82, 10],
+    "output": [3, 9, 10, 27, 38, 43, 82]
+  },
+  "complexity": {
+    "time": "O(n log n)",
+    "space": "O(1)"
+  }
+}
