@@ -10,13 +10,12 @@ import styled from "styled-components";
 const SortingContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
   justify-content: center;
   align-items: center;
 `;
 
 const SortingAlgorithm = styled.div`
-  width: 48%; /* Two algorithms per row for computers */
+  width: 100%; /* Two algorithms per row for computers */
   margin-bottom: 16px;
 
   @media (max-width: 768px) {
@@ -54,7 +53,7 @@ function SortingTabs() {
               <BubbleSort />
             </SortingAlgorithm>
             <SortingAlgorithm>
-              <MergeSort />
+              <MergeSort  showDetails={false}/>
             </SortingAlgorithm>
             <SortingAlgorithm>
               <SelectionSort />
@@ -68,7 +67,7 @@ function SortingTabs() {
           </SortingContainer>
         )}
         {currentTab === 1 && <BubbleSort />}
-        {currentTab === 2 && <MergeSort />}
+        {currentTab === 2 && <MergeSort showDetails={true} />}
         {currentTab === 3 && <SelectionSort />}
         {currentTab === 4 && <HeapSort />}
         {currentTab === 5 && <QuickSort />}

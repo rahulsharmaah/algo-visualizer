@@ -1,0 +1,17 @@
+{
+  "title": "Merge Sort",
+  "steps": [
+    "Divide: The first step in Merge Sort is to divide the unsorted array into smaller sub-arrays. This process continues until each sub-array contains only one element, which is inherently sorted.",
+    "Conquer: After dividing the array into single-element sub-arrays, Merge Sort starts merging them back together in a sorted order. It does this by comparing elements from the sub-arrays and merging them into larger sub-arrays in a sorted manner.",
+    "Merge: Continue merging the sub-arrays until you have a single, fully sorted array. The merging process combines two sorted sub-arrays into one larger sorted sub-array.",
+    "Repeat: Steps 1 to 3 are recursively applied to each pair of sub-arrays until the entire array is sorted."
+  ],
+  "example": {
+    "input": [38, 27, 43, 3, 9, 82, 10],
+    "output": [3, 9, 10, 27, 38, 43, 82]
+  },
+  "complexity": {
+    "time": "O(n log n)",
+    "space": "O(n)"
+  }
+}

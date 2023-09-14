@@ -6,8 +6,12 @@ import {
   TextField,
   Button,
   Slider,
+  Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import MergeSortExplanation from "../../components/MergeSortAlgorithm";
+import ComplexityInfo from "../../components/MergeSortAlgorithm/Complexity";
+import Gutter from "../../components/Gutter";
 
 const ValuesContainer = styled("div")`
   display: flex;
@@ -44,7 +48,7 @@ const GraphContainer = styled("div")`
   align-items: center;
 `;
 
-const MergeSort = () => {
+const MergeSort = ({ showDetails }) => {
   const [data, setData] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [iterationCount, setIterationCount] = useState(0);
@@ -149,90 +153,108 @@ const MergeSort = () => {
   const graphData = data;
 
   return (
-    <Container maxWidth="md">
-      <Typography variant="h3" gutterBottom textAlign="center">
-        Merge Sort{" "}
-      </Typography>
-      <TextField
-        variant="outlined"
-        label="Enter numbers (comma-separated)"
-        fullWidth
-        onChange={handleInputChange}
-        placeholder="e.g., 5, 3, 8, 1, 9"
-        disabled={isSorting}
-        margin="normal"
-        value={inputValue}
-      />
-      <Button
-        variant="contained"
-        onClick={generateRandomData}
-        disabled={isSorting}
-      >
-        Generate Random Data
-      </Button>
-      <ValuesContainer>
-        {data.map((item, index) => (
-          <ValueItem key={index} highlight={true} swapped={false}>
-            {item}
-          </ValueItem>
-        ))}
-      </ValuesContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={mergeSort}
-        disabled={isSorting}
-        style={{ marginTop: "20px" }}
-      >
-        Sort using Merge Sort
-      </Button>
-      <StatsContainer>
-        <div>
-          <Typography variant="h5">Number of Iterations:</Typography>
-          <Typography variant="body1">{iterationCount}</Typography>
-        </div>
-        <div>
-          <Typography variant="h5">Number of Swaps:</Typography>
-          <Typography variant="body1">{swapCount}</Typography>
-        </div>
-      </StatsContainer>
-      <div style={{ marginTop: "20px" }}>
-        <Typography id="speed-slider" gutterBottom>
-          Speed:
-        </Typography>
-        <Slider
-          value={speed}
-          onChange={handleSpeedChange}
-          min={100}
-          max={500}
-          valueLabelDisplay="auto"
-          aria-labelledby="speed-slider"
-        />
-      </div>
-      <GraphContainer>
-        <Typography variant="h4">Graph</Typography>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="400"
-          height="200"
-          style={{
-            overflow: "visible",
-          }}
-        >
-          {graphData.map((item, index) => (
-            <rect
-              key={index}
-              x={index * (400 / graphData.length) + 2} // Add spacing between bars (e.g., 2 units)
-              y={200 - item * 2}
-              width={400 / graphData.length - 4} // Reduce bar width to add spacing
-              height={item * 2}
-              fill={index < iterationCount ? "green" : "blue"} // Change color for sorted bars
+    <>
+      <Grid container>
+        <Grid item md={12} lg={12}>
+          <Container maxWidth="md">
+            <Typography variant="h3" gutterBottom textAlign="center">
+              Merge Sort{" "}
+            </Typography>
+            <TextField
+              variant="outlined"
+              label="Enter numbers (comma-separated)"
+              fullWidth
+              onChange={handleInputChange}
+              placeholder="e.g., 5, 3, 8, 1, 9"
+              disabled={isSorting}
+              margin="normal"
+              value={inputValue}
             />
-          ))}
-        </svg>
-      </GraphContainer>
-      );
-    </Container>
+            <Button
+              variant="contained"
+              onClick={generateRandomData}
+              disabled={isSorting}
+            >
+              Generate Random Data
+            </Button>
+            <ValuesContainer>
+              {data.map((item, index) => (
+                <ValueItem key={index} highlight={true} swapped={false}>
+                  {item}
+                </ValueItem>
+              ))}
+            </ValuesContainer>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={mergeSort}
+              disabled={isSorting}
+              style={{ marginTop: "20px" }}
+            >
+              Sort using Merge Sort
+            </Button>
+            <StatsContainer>
+              <div>
+                <Typography variant="h5">Number of Iterations:</Typography>
+                <Typography variant="body1">{iterationCount}</Typography>
+              </div>
+              <div>
+                <Typography variant="h5">Number of Swaps:</Typography>
+                <Typography variant="body1">{swapCount}</Typography>
+              </div>
+            </StatsContainer>
+            <div style={{ marginTop: "20px" }}>
+              <Typography id="speed-slider" gutterBottom>
+                Speed:
+              </Typography>
+              <Slider
+                value={speed}
+                onChange={handleSpeedChange}
+                min={100}
+                max={500}
+                valueLabelDisplay="auto"
+                aria-labelledby="speed-slider"
+              />
+            </div>
+            <GraphContainer>
+              <Typography variant="h4">Graph</Typography>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="400"
+                height="200"
+                style={{
+                  overflow: "visible",
+                }}
+              >
+                {graphData.map((item, index) => (
+                  <rect
+                    key={index}
+                    x={index * (400 / graphData.length) + 2} // Add spacing between bars (e.g., 2 units)
+                    y={200 - item * 2}
+                    width={400 / graphData.length - 4} // Reduce bar width to add spacing
+                    height={item * 2}
+                    fill={index < iterationCount ? "green" : "blue"} // Change color for sorted bars
+                  />
+                ))}
+              </svg>
+            </GraphContainer>
+            );
+          </Container>
+        </Grid>
+      </Grid>
+      {showDetails ? (
+        <Grid container>
+          <Grid item md={12} lg={12}>
+            <MergeSortExplanation />
+          </Grid>
+          <Grid item md={12} lg={12} xs={10}>
+            <ComplexityInfo />
+          </Grid>
+        </Grid>
+      ) : (
+        "null"
+      )}
+    </>
   );
 };
 

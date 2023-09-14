@@ -148,8 +148,8 @@ const BubbleSort = () => {
         <Slider
           value={speed}
           onChange={handleSpeedChange}
-          min={100}
-          max={500}
+          min={1000}
+          max={2500}
           valueLabelDisplay="auto"
           aria-labelledby="speed-slider"
         />
